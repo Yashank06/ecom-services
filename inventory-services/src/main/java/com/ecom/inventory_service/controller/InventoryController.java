@@ -1,10 +1,12 @@
 package com.ecom.inventory_service.controller;
 
-import com.ecom.inventory_service.dto.InventoryDto;
+import com.ecom.inventory_service.dto.InventoryResponse;
 import com.ecom.inventory_service.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/inventory")
@@ -15,14 +17,14 @@ public class InventoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addToInventory(@RequestBody InventoryDto inventoryDto){
-        inventoryService.addToInventory(inventoryDto);
+    public void addToInventory(@RequestBody InventoryResponse inventoryResponse){
+        inventoryService.addToInventory(inventoryResponse);
     }
 
-    @GetMapping("/{skuCode}")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public boolean isInStock(@PathVariable String skuCode){
-        return inventoryService.isInStock(skuCode);
+    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCodes){
+        return inventoryService.isInStock(skuCodes);
     }
 
 }

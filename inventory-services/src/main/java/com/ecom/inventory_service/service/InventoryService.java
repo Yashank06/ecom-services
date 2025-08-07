@@ -27,13 +27,7 @@ public class InventoryService {
         log.info("inventory added for {}", inventoryResponse.getSkuCode());
     }
 
-    @SneakyThrows
     public List<InventoryResponse> isInStock(List<String> skuCodes){
-
-        log.info("wait started");
-        Thread.sleep(10000);
-        log.info("wait end");
-
         return inventoryRepository.findBySkuCodeIn(skuCodes).stream()
                 .map(inventory -> InventoryResponse.builder()
                         .skuCode(inventory.getSkuCode())
